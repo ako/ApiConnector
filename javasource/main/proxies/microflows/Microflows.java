@@ -14,7 +14,7 @@ import com.mendix.systemwideinterfaces.core.IContext;
 public class Microflows
 {
 	// These are the microflows for the Main module
-	public static String getScheduledEventInformationApi(IContext context, String _payload, String _mimetype, String _url, String _operation, String _eventname)
+	public static String createProduct(IContext context, String _payload, String _mimetype, String _url, String _operation)
 	{
 		try
 		{
@@ -23,15 +23,14 @@ public class Microflows
 			params.put("Mimetype", _mimetype);
 			params.put("Url", _url);
 			params.put("Operation", _operation);
-			params.put("eventname", _eventname);
-			return (String)Core.execute(context, "Main.GetScheduledEventInformationApi", params);
+			return (String)Core.execute(context, "Main.CreateProduct", params);
 		}
 		catch (CoreException e)
 		{
 			throw new MendixRuntimeException(e);
 		}
 	}
-	public static String getUserInfoApi(IContext context, String _payload, String _mimetype, String _url, String _operation, String _username)
+	public static String getProductInfo(IContext context, String _payload, String _mimetype, String _url, String _operation, String _eAN)
 	{
 		try
 		{
@@ -40,25 +39,8 @@ public class Microflows
 			params.put("Mimetype", _mimetype);
 			params.put("Url", _url);
 			params.put("Operation", _operation);
-			params.put("username", _username);
-			return (String)Core.execute(context, "Main.GetUserInfoApi", params);
-		}
-		catch (CoreException e)
-		{
-			throw new MendixRuntimeException(e);
-		}
-	}
-	public static void getUserSessionInfoApi(IContext context, String _payload, String _mimetype, String _url, String _operation, String _eventname)
-	{
-		try
-		{
-			Map<String, Object> params = new HashMap<String, Object>();
-			params.put("Payload", _payload);
-			params.put("Mimetype", _mimetype);
-			params.put("Url", _url);
-			params.put("Operation", _operation);
-			params.put("eventname", _eventname);
-			Core.execute(context, "Main.GetUserSessionInfoApi", params);
+			params.put("EAN", _eAN);
+			return (String)Core.execute(context, "Main.GetProductInfo", params);
 		}
 		catch (CoreException e)
 		{

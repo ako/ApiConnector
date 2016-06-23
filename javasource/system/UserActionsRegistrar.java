@@ -38,6 +38,7 @@ public class UserActionsRegistrar implements EventHandler
 		{
 			component = mxRuntime.getMainComponent();
 			Core.initialize(component, integration);   
+			component.actionRegistry().registerUserAction(apiconnector.actions.ApiExceptionUnknownResource.class);
 			component.actionRegistry().registerUserAction(apiconnector.actions.RegisterApiEndpoint.class);
 			component.actionRegistry().registerUserAction(appcloudservices.actions.GenerateRandomPassword.class);
 			component.actionRegistry().registerUserAction(appcloudservices.actions.LogOutUser.class);

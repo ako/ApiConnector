@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 /**
  * Created by ako on 22-6-2016.
  */
-public class HttpEndpoint {
+public class ApiEndpoint {
     private Pattern urlMatcher;
     private Boolean supportsGet;
     private Boolean supportsPost;
@@ -48,23 +48,23 @@ public class HttpEndpoint {
     }
 
 
-    public HttpEndpoint withUrl(String url) {
+    public ApiEndpoint withUrl(String url) {
         this.url = url;
         return this;
     }
 
-    public HttpEndpoint withMicroflowName(String microflowName) {
+    public ApiEndpoint withMicroflowName(String microflowName) {
         this.microflowName = microflowName;
         return this;
     }
 
-    public HttpEndpoint withSupportsGet(Boolean supportsGET) {
+    public ApiEndpoint withSupportsGet(Boolean supportsGET) {
         this.supportsGet = supportsGET;
         return this;
     }
 
 
-    public HttpEndpoint withSupportsPost(Boolean supportsPOST) {
+    public ApiEndpoint withSupportsPost(Boolean supportsPOST) {
         this.supportsPost = supportsPOST;
         return this;
     }

@@ -1,6 +1,5 @@
 package apiconnector.impl;
 
-import com.google.inject.internal.ImmutableMap;
 import com.mendix.core.Core;
 import com.mendix.externalinterface.connector.RequestHandler;
 import com.mendix.logging.ILogNode;
@@ -19,31 +18,30 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import static javafx.scene.input.KeyCode.R;
-
 /**
  * Created by ako on 22-6-2016.
  */
-public class HttpConnectorHandler extends RequestHandler {
-    private static HashMap<String, HttpEndpoint> registeredHttpEndpoints = new HashMap<String, HttpEndpoint>();
-    private static ILogNode logger = Core.getLogger(HttpConnectorHandler.class.getName());
+public class ApiConnectorHandler extends RequestHandler {
+    private static HashMap<String, ApiEndpoint> registeredHttpEndpoints = new HashMap<String, ApiEndpoint>();
+    private static ILogNode logger = Core.getLogger(ApiConnectorHandler.class.getName());
     private static Pattern urlToRe = Pattern.compile("\\{[a-zA-Z0-9_-]*\\}");
     private static Pattern urlParsToRe = Pattern.compile("(\\{[a-zA-Z0-9_-]*\\})");
+    private ThreadLocal<ApiMicroflowState> apiState = null;
 
     @Override
     protected void processRequest(IMxRuntimeRequest iMxRuntimeRequest, IMxRuntimeResponse iMxRuntimeResponse, String s) throws Exception {
         logger.info("processRequest");
 
-        Iterator<HttpEndpoint> endpointIter = registeredHttpEndpoints.values().iterator();
+        Iterator<ApiEndpoint> endpointIter = registeredHttpEndpoints.values().iterator();
         String queryString = iMxRuntimeRequest.getHttpServletRequest().getQueryString();
         String apiPath = iMxRuntimeRequest.getHttpServletRequest().getRequestURI();
-        if(queryString != null){
+        if (queryString != null) {
             apiPath = apiPath + "?" + queryString;
         }
         logger.info(String.format("apipath = %s", apiPath));
 
         while (endpointIter.hasNext()) {
-            HttpEndpoint endpoint = endpointIter.next();
+            ApiEndpoint endpoint = endpointIter.next();
             if (endpoint.getUrlMatcher().matcher(apiPath).matches()) {
                 logger.info(String.format("request handler path %s matches %s", apiPath, endpoint.getUrlMatcher().toString()));
 
@@ -84,6 +82,9 @@ public class HttpConnectorHandler extends RequestHandler {
 
                     logger.info("Parameter map: " + pars);
 
+                    apiState = new ThreadLocal<ApiMicroflowState>();
+                    apiState.set(new ApiMicroflowState());
+
                     /*
                      * Invoke microflow
                      */
@@ -92,6 +93,9 @@ public class HttpConnectorHandler extends RequestHandler {
                     /*
                      * Return request response
                      */
+                    logger.info(String.format("transaction id: %s", ctx.getTransactionId()));
+                    logger.info(String.format("transaction id: %s", ctx.getExecutionThread().toString()));
+                    iMxRuntimeResponse.setStatus(apiState.get().getStatusCode());
                     if (result != null) {
                         iMxRuntimeResponse.getWriter().write(result);
                     }
@@ -107,7 +111,7 @@ public class HttpConnectorHandler extends RequestHandler {
 
     }
 
-    public void addHttpEndpoint(String url, HttpEndpoint endpoint) {
+    public void addHttpEndpoint(String url, ApiEndpoint endpoint) {
         logger.info(String.format("addHttpEndpoint: %s, %s", url, endpoint));
 
         String urlRe = urlToRe.matcher(url).replaceAll("\\[a-zA-Z0-9_-\\]*");
@@ -136,5 +140,14 @@ public class HttpConnectorHandler extends RequestHandler {
         endpoint.setParameterNames(parNames.toArray(new String[0]));
 
         registeredHttpEndpoints.put(url, endpoint);
+    }
+
+    public void setApiStateUnknownResource() {
+        logger.info("setApiStateUnknownResource: " + apiState.toString());
+        if (apiState.get() == null) {
+            apiState.set(new ApiMicroflowState());
+        }
+        logger.info("apiState: " + apiState.toString());
+        apiState.get().setStatusCode(404);
     }
 }

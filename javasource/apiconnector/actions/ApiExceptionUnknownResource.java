@@ -9,32 +9,28 @@
 
 package apiconnector.actions;
 
+import apiconnector.impl.ApiConnector;
+import com.mendix.core.Core;
+import com.mendix.logging.ILogNode;
 import com.mendix.systemwideinterfaces.core.IContext;
 import com.mendix.webui.CustomJavaAction;
-import apiconnector.impl.ApiConnector;
 
-public class RegisterApiEndpoint extends CustomJavaAction<Boolean>
+public class ApiExceptionUnknownResource extends CustomJavaAction<Boolean>
 {
-	private String UrlPattern;
-	private String MicroflowName;
-	private Boolean SupportsGET;
-	private Boolean SupportsPOST;
-
-	public RegisterApiEndpoint(IContext context, String UrlPattern, String MicroflowName, Boolean SupportsGET, Boolean SupportsPOST)
+	public ApiExceptionUnknownResource(IContext context)
 	{
 		super(context);
-		this.UrlPattern = UrlPattern;
-		this.MicroflowName = MicroflowName;
-		this.SupportsGET = SupportsGET;
-		this.SupportsPOST = SupportsPOST;
 	}
 
 	@Override
 	public Boolean executeAction() throws Exception
 	{
 		// BEGIN USER CODE
+
+        logger.info(String.format("transaction id: %s", getContext().getTransactionId()));
+        logger.info(String.format("transaction id: %s", getContext().getExecutionThread().toString()));
         ApiConnector connector = new ApiConnector();
-        connector.addHttpEndpoint(this.UrlPattern,this.MicroflowName,this.SupportsGET,this.SupportsPOST);
+        connector.setApiStateUnknownResource();
         return true;
 		// END USER CODE
 	}
@@ -45,9 +41,10 @@ public class RegisterApiEndpoint extends CustomJavaAction<Boolean>
 	@Override
 	public String toString()
 	{
-		return "RegisterApiEndpoint";
+		return "ApiExceptionUnknownResource";
 	}
 
 	// BEGIN EXTRA CODE
+    private static final ILogNode logger = Core.getLogger(ApiExceptionUnknownResource.class.getName());
 	// END EXTRA CODE
 }

@@ -1,30 +1,31 @@
 package apiconnector.impl;
 
 import com.mendix.core.Core;
-import com.mendix.externalinterface.connector.RequestHandler;
-
-import java.util.HashMap;
 
 /**
  * Created by ako on 22-6-2016.
  */
-public class HttpConnector {
+public class ApiConnector {
 
-    private static HttpConnectorHandler httpHandler = null;
+    private static ApiConnectorHandler httpHandler = null;
 
-    public HttpConnector() {
+    public ApiConnector() {
         if (httpHandler == null) {
-            httpHandler = new HttpConnectorHandler();
+            httpHandler = new ApiConnectorHandler();
             Core.addRequestHandler("api/", httpHandler);
         }
     }
 
     public void addHttpEndpoint(String url, String microflowName, Boolean supportsGET, Boolean supportsPOST) {
         httpHandler.addHttpEndpoint(url,
-                new HttpEndpoint().
+                new ApiEndpoint().
                         withUrl(url).
                         withMicroflowName(microflowName).
                         withSupportsGet(supportsGET).
                         withSupportsPost(supportsPOST));
+    }
+
+    public void setApiStateUnknownResource(){
+        httpHandler.setApiStateUnknownResource();
     }
 }
