@@ -1,0 +1,7 @@
+.idea
+userlib/*
+ApiConnector.iml
+ApiConnector.launch
+deployment
+*.bak
+*.lock
