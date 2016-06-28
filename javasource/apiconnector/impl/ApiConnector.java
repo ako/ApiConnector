@@ -1,6 +1,8 @@
 package apiconnector.impl;
 
 import com.mendix.core.Core;
+import com.mendix.systemwideinterfaces.core.IContext;
+import com.mendix.systemwideinterfaces.core.IMendixObject;
 
 /**
  * Created by ako on 22-6-2016.
@@ -25,7 +27,33 @@ public class ApiConnector {
                         withSupportsPost(supportsPOST));
     }
 
-    public void setApiStateUnknownResource(){
-        httpHandler.setApiStateUnknownResource();
+    public void setApiStateUnknownResource(IContext ctx) {
+        httpHandler.setApiStateUnknownResource(ctx);
+    }
+
+    public void setApiHeaderLocation(IContext context, String locationPath) {
+        httpHandler.setApiHeaderLocation(context, locationPath);
+    }
+
+    public void setApiStatusCode(IContext ctx, int statusCode) {
+        httpHandler.setApiStatusCode(ctx, statusCode);
+    }
+
+    public void addHttpEndpoint(String urlPattern, String microflowName,
+                                Boolean supportsGET, Boolean supportsPOST, Boolean supportsPUT, Boolean supportsDELETE, Boolean supportsPATCH,
+                                String requestMappingName, IMendixObject requestEntity, String responseMappingName, IMendixObject responseEntity) {
+        httpHandler.addHttpEndpoint(urlPattern,
+                new ApiEndpoint().
+                        withUrl(urlPattern).
+                        withMicroflowName(microflowName).
+                        withSupportsGet(supportsGET).
+                        withSupportsPost(supportsPOST).
+                        withSupportsPut(supportsPUT).
+                        withSupportsDelete(supportsDELETE).
+                        withSupportsPatch(supportsPATCH).
+                        withRequestMapping(requestMappingName).
+                        withRequestEntity(requestEntity).
+                        withResponseMapping(responseMappingName).
+                        withResponseEntity(responseEntity));
     }
 }

@@ -1,5 +1,8 @@
 package apiconnector.impl;
 
+import com.mendix.systemwideinterfaces.core.IMendixObject;
+
+import java.util.Arrays;
 import java.util.regex.Pattern;
 
 /**
@@ -7,12 +10,71 @@ import java.util.regex.Pattern;
  */
 public class ApiEndpoint {
     private Pattern urlMatcher;
-    private Boolean supportsGet;
-    private Boolean supportsPost;
+    private Boolean supportsGet = false;
+    private Boolean supportsPost = false;
+    private Boolean supportsPut = false;
+    private Boolean supportsDelete = false;
+    private Boolean supportsPatch = false;
     private String url;
     private String microflowName;
     private Pattern urlParameterGroupMatcher;
     private String[] parameterNames;
+    private String requestMappingName;
+    private String requestEntity;
+    private String responseMappingName;
+    private String responseEntity;
+
+    public Boolean getSupportsPut() {
+        return supportsPut;
+    }
+
+    public void setSupportsPut(Boolean supportsPut) {
+        this.supportsPut = supportsPut;
+    }
+
+    public Boolean getSupportsDelete() {
+        return supportsDelete;
+    }
+
+    public void setSupportsDelete(Boolean supportsDelete) {
+        this.supportsDelete = supportsDelete;
+    }
+
+    public Boolean getSupportsPatch() {
+        return supportsPatch;
+    }
+
+    public void setSupportsPatch(Boolean supportsPatch) {
+        this.supportsPatch = supportsPatch;
+    }
+
+    @Override
+    public String toString() {
+        return "ApiEndpoint{" +
+                "urlMatcher=" + urlMatcher +
+                ", supportsGet=" + supportsGet +
+                ", supportsPost=" + supportsPost +
+                ", supportsPut=" + supportsPut +
+                ", supportsDelete=" + supportsDelete +
+                ", supportsPatch=" + supportsPatch +
+                ", url='" + url + '\'' +
+                ", microflowName='" + microflowName + '\'' +
+                ", urlParameterGroupMatcher=" + urlParameterGroupMatcher +
+                ", parameterNames=" + Arrays.toString(parameterNames) +
+                ", requestMappingName='" + requestMappingName + '\'' +
+                ", requestEntity='" + requestEntity + '\'' +
+                ", responseMappingName='" + responseMappingName + '\'' +
+                ", responseEntity='" + responseEntity + '\'' +
+                '}';
+    }
+
+    public String getMethodsString(){
+        return (supportsGet?"GET":"") +
+                (supportsPost?"POST":"") +
+                (supportsPut?"PUT":"") +
+                (supportsDelete?"DELETE":"") +
+                (supportsPatch?"PATCH":"");
+    }
 
     public Boolean getSupportsGet() {
         return supportsGet;
@@ -95,5 +157,74 @@ public class ApiEndpoint {
 
     public String[] getParameterNames() {
         return parameterNames;
+    }
+
+
+    public String getRequestMappingName() {
+        return requestMappingName;
+    }
+
+    public void setRequestMappingName(String requestMappingName) {
+        this.requestMappingName = requestMappingName;
+    }
+
+    public String getRequestEntity() {
+        return requestEntity;
+    }
+
+    public void setRequestEntity(String requestEntity) {
+        this.requestEntity = requestEntity;
+    }
+
+    public String getResponseMappingName() {
+        return responseMappingName;
+    }
+
+    public void setResponseMappingName(String responseMappingName) {
+        this.responseMappingName = responseMappingName;
+    }
+
+    public String getResponseEntity() {
+        return responseEntity;
+    }
+
+    public void setResponseEntity(String responseEntity) {
+        this.responseEntity = responseEntity;
+    }
+
+
+    public ApiEndpoint withRequestMapping(String requestMappingName) {
+        this.requestMappingName = requestMappingName;
+        return this;
+    }
+
+    public ApiEndpoint withRequestEntity(IMendixObject requestEntity) {
+        this.requestEntity = (requestEntity != null ? requestEntity.getMetaObject().getName() : null);
+        return this;
+    }
+
+    public ApiEndpoint withResponseMapping(String responseMappingName) {
+        this.responseMappingName = responseMappingName;
+        return this;
+    }
+
+    public ApiEndpoint withResponseEntity(IMendixObject responseEntity) {
+        this.responseEntity = (responseEntity != null ? responseEntity.getMetaObject().getName() : null);
+        return this;
+    }
+
+    public ApiEndpoint withSupportsPut(Boolean supportsPUT) {
+        this.supportsPut = supportsPUT;
+        return this;
+    }
+
+    public ApiEndpoint withSupportsDelete(Boolean supportsDELETE) {
+        this.supportsDelete = supportsDELETE;
+        return this;
+    }
+
+    public ApiEndpoint withSupportsPatch(Boolean supportsPATCH) {
+        this.supportsPatch = supportsPATCH;
+        return this;
     }
 }

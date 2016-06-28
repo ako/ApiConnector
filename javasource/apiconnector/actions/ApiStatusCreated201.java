@@ -15,9 +15,9 @@ import com.mendix.logging.ILogNode;
 import com.mendix.systemwideinterfaces.core.IContext;
 import com.mendix.webui.CustomJavaAction;
 
-public class ApiExceptionUnknownResource extends CustomJavaAction<Boolean>
+public class ApiStatusCreated201 extends CustomJavaAction<Boolean>
 {
-	public ApiExceptionUnknownResource(IContext context)
+	public ApiStatusCreated201(IContext context)
 	{
 		super(context);
 	}
@@ -26,11 +26,9 @@ public class ApiExceptionUnknownResource extends CustomJavaAction<Boolean>
 	public Boolean executeAction() throws Exception
 	{
 		// BEGIN USER CODE
-
-        logger.info(String.format("transaction id: %s", getContext().getTransactionId()));
-        logger.info(String.format("transaction id: %s", getContext().getExecutionThread().toString()));
+        ILogNode logger = Core.getLogger(ApiHeaderLocation.class.getName());
         ApiConnector connector = new ApiConnector();
-        connector.setApiStateUnknownResource(getContext());
+        connector.setApiStatusCode(getContext(),201);
         return true;
 		// END USER CODE
 	}
@@ -41,10 +39,9 @@ public class ApiExceptionUnknownResource extends CustomJavaAction<Boolean>
 	@Override
 	public String toString()
 	{
-		return "ApiExceptionUnknownResource";
+		return "ApiStatusCreated201";
 	}
 
 	// BEGIN EXTRA CODE
-    private static final ILogNode logger = Core.getLogger(ApiExceptionUnknownResource.class.getName());
 	// END EXTRA CODE
 }
