@@ -38,8 +38,8 @@ public class UserActionsRegistrar implements EventHandler
 		{
 			component = mxRuntime.getMainComponent();
 			Core.initialize(component, integration);   
-			component.actionRegistry().registerUserAction(apiconnector.actions.ApiExceptionUnknownResource.class);
 			component.actionRegistry().registerUserAction(apiconnector.actions.ApiHeaderLocation.class);
+			component.actionRegistry().registerUserAction(apiconnector.actions.ApiStatus404NotFound.class);
 			component.actionRegistry().registerUserAction(apiconnector.actions.ApiStatusCreated201.class);
 			component.actionRegistry().registerUserAction(apiconnector.actions.RegisterApiEndpoint.class);
 			component.actionRegistry().registerUserAction(apiconnector.actions.RegisterApiEndpointWithMappings.class);

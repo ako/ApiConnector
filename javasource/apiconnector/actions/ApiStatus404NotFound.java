@@ -15,9 +15,9 @@ import com.mendix.logging.ILogNode;
 import com.mendix.systemwideinterfaces.core.IContext;
 import com.mendix.webui.CustomJavaAction;
 
-public class ApiExceptionUnknownResource extends CustomJavaAction<Boolean>
+public class ApiStatus404NotFound extends CustomJavaAction<Boolean>
 {
-	public ApiExceptionUnknownResource(IContext context)
+	public ApiStatus404NotFound(IContext context)
 	{
 		super(context);
 	}
@@ -41,10 +41,10 @@ public class ApiExceptionUnknownResource extends CustomJavaAction<Boolean>
 	@Override
 	public String toString()
 	{
-		return "ApiExceptionUnknownResource";
+		return "ApiStatus404NotFound";
 	}
 
 	// BEGIN EXTRA CODE
-    private static final ILogNode logger = Core.getLogger(ApiExceptionUnknownResource.class.getName());
+    private static final ILogNode logger = Core.getLogger(ApiStatus404NotFound.class.getName());
 	// END EXTRA CODE
 }
