@@ -31,7 +31,7 @@ public class ApiConnectorHandler extends RequestHandler {
 
     @Override
     protected void processRequest(IMxRuntimeRequest iMxRuntimeRequest, IMxRuntimeResponse iMxRuntimeResponse, String s) throws Exception {
-        logger.info("processRequest");
+        logger.info("> processRequest");
 
         Iterator<ApiEndpoint> endpointIter = registeredHttpEndpoints.values().iterator();
         String queryString = iMxRuntimeRequest.getHttpServletRequest().getQueryString();
@@ -174,7 +174,7 @@ public class ApiConnectorHandler extends RequestHandler {
                 logger.info(String.format("request handler path %s does not match %s, %s", apiPath, endpoint.getUrlMatcher().toString(), endpoint.toString()));
             }
         }
-
+        logger.info("< processRequest");
     }
 
     public void addHttpEndpoint(String url, ApiEndpoint endpoint) {

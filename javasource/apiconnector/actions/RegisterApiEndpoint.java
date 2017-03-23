@@ -13,14 +13,14 @@ import com.mendix.systemwideinterfaces.core.IContext;
 import com.mendix.webui.CustomJavaAction;
 import apiconnector.impl.ApiConnector;
 
-public class RegisterApiEndpoint extends CustomJavaAction<Boolean>
+public class RegisterApiEndpoint extends CustomJavaAction<java.lang.Boolean>
 {
-	private String UrlPattern;
-	private String MicroflowName;
-	private Boolean SupportsGET;
-	private Boolean SupportsPOST;
+	private java.lang.String UrlPattern;
+	private java.lang.String MicroflowName;
+	private java.lang.Boolean SupportsGET;
+	private java.lang.Boolean SupportsPOST;
 
-	public RegisterApiEndpoint(IContext context, String UrlPattern, String MicroflowName, Boolean SupportsGET, Boolean SupportsPOST)
+	public RegisterApiEndpoint(IContext context, java.lang.String UrlPattern, java.lang.String MicroflowName, java.lang.Boolean SupportsGET, java.lang.Boolean SupportsPOST)
 	{
 		super(context);
 		this.UrlPattern = UrlPattern;
@@ -30,7 +30,7 @@ public class RegisterApiEndpoint extends CustomJavaAction<Boolean>
 	}
 
 	@Override
-	public Boolean executeAction() throws Exception
+	public java.lang.Boolean executeAction() throws Exception
 	{
 		// BEGIN USER CODE
         ApiConnector connector = new ApiConnector();
@@ -43,7 +43,7 @@ public class RegisterApiEndpoint extends CustomJavaAction<Boolean>
 	 * Returns a string representation of this action
 	 */
 	@Override
-	public String toString()
+	public java.lang.String toString()
 	{
 		return "RegisterApiEndpoint";
 	}

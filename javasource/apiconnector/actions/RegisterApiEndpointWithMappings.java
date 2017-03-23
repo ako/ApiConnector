@@ -14,21 +14,21 @@ import com.mendix.systemwideinterfaces.core.IContext;
 import com.mendix.webui.CustomJavaAction;
 import com.mendix.systemwideinterfaces.core.IMendixObject;
 
-public class RegisterApiEndpointWithMappings extends CustomJavaAction<Boolean>
+public class RegisterApiEndpointWithMappings extends CustomJavaAction<java.lang.Boolean>
 {
-	private String UrlPattern;
-	private String MicroflowName;
-	private Boolean SupportsGET;
-	private Boolean SupportsPOST;
-	private Boolean SupportsPUT;
-	private Boolean SupportsDELETE;
-	private Boolean SupportsPATCH;
-	private String RequestMappingName;
+	private java.lang.String UrlPattern;
+	private java.lang.String MicroflowName;
+	private java.lang.Boolean SupportsGET;
+	private java.lang.Boolean SupportsPOST;
+	private java.lang.Boolean SupportsPUT;
+	private java.lang.Boolean SupportsDELETE;
+	private java.lang.Boolean SupportsPATCH;
+	private java.lang.String RequestMappingName;
 	private IMendixObject RequestEntity;
-	private String ResponseMappingName;
+	private java.lang.String ResponseMappingName;
 	private IMendixObject ResponseEntity;
 
-	public RegisterApiEndpointWithMappings(IContext context, String UrlPattern, String MicroflowName, Boolean SupportsGET, Boolean SupportsPOST, Boolean SupportsPUT, Boolean SupportsDELETE, Boolean SupportsPATCH, String RequestMappingName, IMendixObject RequestEntity, String ResponseMappingName, IMendixObject ResponseEntity)
+	public RegisterApiEndpointWithMappings(IContext context, java.lang.String UrlPattern, java.lang.String MicroflowName, java.lang.Boolean SupportsGET, java.lang.Boolean SupportsPOST, java.lang.Boolean SupportsPUT, java.lang.Boolean SupportsDELETE, java.lang.Boolean SupportsPATCH, java.lang.String RequestMappingName, IMendixObject RequestEntity, java.lang.String ResponseMappingName, IMendixObject ResponseEntity)
 	{
 		super(context);
 		this.UrlPattern = UrlPattern;
@@ -45,7 +45,7 @@ public class RegisterApiEndpointWithMappings extends CustomJavaAction<Boolean>
 	}
 
 	@Override
-	public Boolean executeAction() throws Exception
+	public java.lang.Boolean executeAction() throws Exception
 	{
 		// BEGIN USER CODE
         ApiConnector connector = new ApiConnector();
@@ -59,7 +59,7 @@ public class RegisterApiEndpointWithMappings extends CustomJavaAction<Boolean>
 	 * Returns a string representation of this action
 	 */
 	@Override
-	public String toString()
+	public java.lang.String toString()
 	{
 		return "RegisterApiEndpointWithMappings";
 	}

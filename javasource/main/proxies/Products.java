@@ -65,7 +65,7 @@ public class Products
 
 	/**
 	 * Initialize a proxy using context (recommended). This context will be used for security checking when the get- and set-methods without context parameters are called.
-	 * The get- and set-methods with context parameter should be used when for instance sudo access is necessary (IContext.getSudoContext() can be used to obtain sudo access).
+	 * The get- and set-methods with context parameter should be used when for instance sudo access is necessary (IContext.createSudoClone() can be used to obtain sudo access).
 	 */
 	public static main.proxies.Products initialize(com.mendix.systemwideinterfaces.core.IContext context, com.mendix.systemwideinterfaces.core.IMendixObject mendixObject)
 	{
@@ -120,7 +120,7 @@ public class Products
 	/**
 	 * @return value of EAN
 	 */
-	public final String getEAN()
+	public final java.lang.String getEAN()
 	{
 		return getEAN(getContext());
 	}
@@ -129,16 +129,16 @@ public class Products
 	 * @param context
 	 * @return value of EAN
 	 */
-	public final String getEAN(com.mendix.systemwideinterfaces.core.IContext context)
+	public final java.lang.String getEAN(com.mendix.systemwideinterfaces.core.IContext context)
 	{
-		return (String) getMendixObject().getValue(context, MemberNames.EAN.toString());
+		return (java.lang.String) getMendixObject().getValue(context, MemberNames.EAN.toString());
 	}
 
 	/**
 	 * Set value of EAN
 	 * @param ean
 	 */
-	public final void setEAN(String ean)
+	public final void setEAN(java.lang.String ean)
 	{
 		setEAN(getContext(), ean);
 	}
@@ -148,7 +148,7 @@ public class Products
 	 * @param context
 	 * @param ean
 	 */
-	public final void setEAN(com.mendix.systemwideinterfaces.core.IContext context, String ean)
+	public final void setEAN(com.mendix.systemwideinterfaces.core.IContext context, java.lang.String ean)
 	{
 		getMendixObject().setValue(context, MemberNames.EAN.toString(), ean);
 	}
@@ -156,7 +156,7 @@ public class Products
 	/**
 	 * @return value of Name
 	 */
-	public final String getName()
+	public final java.lang.String getName()
 	{
 		return getName(getContext());
 	}
@@ -165,16 +165,16 @@ public class Products
 	 * @param context
 	 * @return value of Name
 	 */
-	public final String getName(com.mendix.systemwideinterfaces.core.IContext context)
+	public final java.lang.String getName(com.mendix.systemwideinterfaces.core.IContext context)
 	{
-		return (String) getMendixObject().getValue(context, MemberNames.Name.toString());
+		return (java.lang.String) getMendixObject().getValue(context, MemberNames.Name.toString());
 	}
 
 	/**
 	 * Set value of Name
 	 * @param name
 	 */
-	public final void setName(String name)
+	public final void setName(java.lang.String name)
 	{
 		setName(getContext(), name);
 	}
@@ -184,7 +184,7 @@ public class Products
 	 * @param context
 	 * @param name
 	 */
-	public final void setName(com.mendix.systemwideinterfaces.core.IContext context, String name)
+	public final void setName(com.mendix.systemwideinterfaces.core.IContext context, java.lang.String name)
 	{
 		getMendixObject().setValue(context, MemberNames.Name.toString(), name);
 	}
@@ -192,7 +192,7 @@ public class Products
 	/**
 	 * @return value of Description
 	 */
-	public final String getDescription()
+	public final java.lang.String getDescription()
 	{
 		return getDescription(getContext());
 	}
@@ -201,16 +201,16 @@ public class Products
 	 * @param context
 	 * @return value of Description
 	 */
-	public final String getDescription(com.mendix.systemwideinterfaces.core.IContext context)
+	public final java.lang.String getDescription(com.mendix.systemwideinterfaces.core.IContext context)
 	{
-		return (String) getMendixObject().getValue(context, MemberNames.Description.toString());
+		return (java.lang.String) getMendixObject().getValue(context, MemberNames.Description.toString());
 	}
 
 	/**
 	 * Set value of Description
 	 * @param description
 	 */
-	public final void setDescription(String description)
+	public final void setDescription(java.lang.String description)
 	{
 		setDescription(getContext(), description);
 	}
@@ -220,7 +220,7 @@ public class Products
 	 * @param context
 	 * @param description
 	 */
-	public final void setDescription(com.mendix.systemwideinterfaces.core.IContext context, String description)
+	public final void setDescription(com.mendix.systemwideinterfaces.core.IContext context, java.lang.String description)
 	{
 		getMendixObject().setValue(context, MemberNames.Description.toString(), description);
 	}

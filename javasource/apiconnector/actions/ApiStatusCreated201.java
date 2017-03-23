@@ -15,7 +15,7 @@ import com.mendix.logging.ILogNode;
 import com.mendix.systemwideinterfaces.core.IContext;
 import com.mendix.webui.CustomJavaAction;
 
-public class ApiStatusCreated201 extends CustomJavaAction<Boolean>
+public class ApiStatusCreated201 extends CustomJavaAction<java.lang.Boolean>
 {
 	public ApiStatusCreated201(IContext context)
 	{
@@ -23,7 +23,7 @@ public class ApiStatusCreated201 extends CustomJavaAction<Boolean>
 	}
 
 	@Override
-	public Boolean executeAction() throws Exception
+	public java.lang.Boolean executeAction() throws Exception
 	{
 		// BEGIN USER CODE
         ILogNode logger = Core.getLogger(ApiHeaderLocation.class.getName());
@@ -37,7 +37,7 @@ public class ApiStatusCreated201 extends CustomJavaAction<Boolean>
 	 * Returns a string representation of this action
 	 */
 	@Override
-	public String toString()
+	public java.lang.String toString()
 	{
 		return "ApiStatusCreated201";
 	}

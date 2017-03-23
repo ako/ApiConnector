@@ -15,18 +15,18 @@ import com.mendix.logging.ILogNode;
 import com.mendix.systemwideinterfaces.core.IContext;
 import com.mendix.webui.CustomJavaAction;
 
-public class ApiHeaderLocation extends CustomJavaAction<Boolean>
+public class ApiHeaderLocation extends CustomJavaAction<java.lang.Boolean>
 {
-	private String LocationPath;
+	private java.lang.String LocationPath;
 
-	public ApiHeaderLocation(IContext context, String LocationPath)
+	public ApiHeaderLocation(IContext context, java.lang.String LocationPath)
 	{
 		super(context);
 		this.LocationPath = LocationPath;
 	}
 
 	@Override
-	public Boolean executeAction() throws Exception
+	public java.lang.Boolean executeAction() throws Exception
 	{
 		// BEGIN USER CODE
 		ILogNode logger = Core.getLogger(ApiHeaderLocation.class.getName());
@@ -40,7 +40,7 @@ public class ApiHeaderLocation extends CustomJavaAction<Boolean>
 	 * Returns a string representation of this action
 	 */
 	@Override
-	public String toString()
+	public java.lang.String toString()
 	{
 		return "ApiHeaderLocation";
 	}
