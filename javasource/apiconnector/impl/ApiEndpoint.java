@@ -24,6 +24,16 @@ public class ApiEndpoint {
     private String responseMappingName;
     private String responseEntity;
 
+    public String getOqlQuery() {
+        return oqlQuery;
+    }
+
+    public void setOqlQuery(String oqlQuery) {
+        this.oqlQuery = oqlQuery;
+    }
+
+    private String oqlQuery;
+
     public Boolean getSupportsPut() {
         return supportsPut;
     }
@@ -119,6 +129,10 @@ public class ApiEndpoint {
         this.microflowName = microflowName;
         return this;
     }
+    public ApiEndpoint withOqlQuery(String oqlQuery){
+        this.oqlQuery = oqlQuery;
+        return this;
+    }
 
     public ApiEndpoint withSupportsGet(Boolean supportsGET) {
         this.supportsGet = supportsGET;
@@ -198,8 +212,8 @@ public class ApiEndpoint {
         return this;
     }
 
-    public ApiEndpoint withRequestEntity(IMendixObject requestEntity) {
-        this.requestEntity = (requestEntity != null ? requestEntity.getMetaObject().getName() : null);
+    public ApiEndpoint withRequestEntity(String requestEntity) {
+        this.requestEntity = requestEntity;
         return this;
     }
 
@@ -208,8 +222,8 @@ public class ApiEndpoint {
         return this;
     }
 
-    public ApiEndpoint withResponseEntity(IMendixObject responseEntity) {
-        this.responseEntity = (responseEntity != null ? responseEntity.getMetaObject().getName() : null);
+    public ApiEndpoint withResponseEntity(String responseEntity) {
+        this.responseEntity = responseEntity;
         return this;
     }
 

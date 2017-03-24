@@ -123,17 +123,24 @@ public class ApiConnectorHandler extends RequestHandler {
                     mfState.setHeaderLocation(apiPath);
                     apiState.put(txId, mfState);
 
-                    /*
-                     * Invoke microflow
-                     */
                     String resultString = null;
                     Object resultObject = null;
-                    if (endpoint.getResponseMappingName() == null) {
-                        resultString = (String) Core.execute(ctx, endpoint.getMicroflowName(), true, pars);
+                    if (endpoint.getMicroflowName() != null) {
+                        /*
+                         * Invoke microflow
+                         */
+                        if (endpoint.getResponseMappingName() == null) {
+                            resultString = (String) Core.execute(ctx, endpoint.getMicroflowName(), true, pars);
+                        } else {
+                            resultObject = Core.execute(ctx, endpoint.getMicroflowName(), true, pars);
+                        }
+                    } else if (endpoint.getOqlQuery() != null) {
+                        Map<String, String> sort = new HashMap<String, String>();
+                        resultObject = Core.retrieveXPathQuery(ctx, endpoint.getOqlQuery(), 1, 0, sort).get(0);
+                        logger.info(String.format("Xpath %s result %s", endpoint.getOqlQuery(), resultObject.toString()));
                     } else {
-                        resultObject = Core.execute(ctx, endpoint.getMicroflowName(), true, pars);
-                    }
 
+                    }
                     /*
                      * Handle API state on response
                      */
@@ -153,13 +160,15 @@ public class ApiConnectorHandler extends RequestHandler {
                             iMxRuntimeResponse.getWriter().write(resultString);
                         }
                     } else {
-                        logger.info("Mapping result object: " + resultObject.toString());
-                        if (resultObject instanceof IMendixObject) {
+                        if (resultObject != null && resultObject instanceof IMendixObject) {
+                            logger.info("Mapping result object: " + resultObject.toString());
                             InputStream is = Core.exportStream(ctx, endpoint.getResponseMappingName(), (IMendixObject) resultObject, false);
                             OutputStream os = iMxRuntimeResponse.getOutputStream();
                             ByteStreams.copy(is, os);
                             is.close();
                             os.close();
+                        } else if (resultObject == null) {
+                            //iMxRuntimeResponse.getWriter().write("{'error':'No data found'}");
                         } else {
                             iMxRuntimeResponse.getWriter().write("{'error':'Exporting complex json not yet supported'}");
                         }

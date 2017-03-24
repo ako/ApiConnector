@@ -4,16 +4,16 @@
 
 package main.proxies;
 
-public class Products
+public class Product
 {
-	private final com.mendix.systemwideinterfaces.core.IMendixObject productsMendixObject;
+	private final com.mendix.systemwideinterfaces.core.IMendixObject productMendixObject;
 
 	private final com.mendix.systemwideinterfaces.core.IContext context;
 
 	/**
 	 * Internal name of this entity
 	 */
-	public static final java.lang.String entityName = "Main.Products";
+	public static final java.lang.String entityName = "Main.Product";
 
 	/**
 	 * Enum describing members of this entity
@@ -38,51 +38,51 @@ public class Products
 		}
 	}
 
-	public Products(com.mendix.systemwideinterfaces.core.IContext context)
+	public Product(com.mendix.systemwideinterfaces.core.IContext context)
 	{
-		this(context, com.mendix.core.Core.instantiate(context, "Main.Products"));
+		this(context, com.mendix.core.Core.instantiate(context, "Main.Product"));
 	}
 
-	protected Products(com.mendix.systemwideinterfaces.core.IContext context, com.mendix.systemwideinterfaces.core.IMendixObject productsMendixObject)
+	protected Product(com.mendix.systemwideinterfaces.core.IContext context, com.mendix.systemwideinterfaces.core.IMendixObject productMendixObject)
 	{
-		if (productsMendixObject == null)
+		if (productMendixObject == null)
 			throw new java.lang.IllegalArgumentException("The given object cannot be null.");
-		if (!com.mendix.core.Core.isSubClassOf("Main.Products", productsMendixObject.getType()))
-			throw new java.lang.IllegalArgumentException("The given object is not a Main.Products");
+		if (!com.mendix.core.Core.isSubClassOf("Main.Product", productMendixObject.getType()))
+			throw new java.lang.IllegalArgumentException("The given object is not a Main.Product");
 
-		this.productsMendixObject = productsMendixObject;
+		this.productMendixObject = productMendixObject;
 		this.context = context;
 	}
 
 	/**
-	 * @deprecated Use 'Products.load(IContext, IMendixIdentifier)' instead.
+	 * @deprecated Use 'Product.load(IContext, IMendixIdentifier)' instead.
 	 */
 	@Deprecated
-	public static main.proxies.Products initialize(com.mendix.systemwideinterfaces.core.IContext context, com.mendix.systemwideinterfaces.core.IMendixIdentifier mendixIdentifier) throws com.mendix.core.CoreException
+	public static main.proxies.Product initialize(com.mendix.systemwideinterfaces.core.IContext context, com.mendix.systemwideinterfaces.core.IMendixIdentifier mendixIdentifier) throws com.mendix.core.CoreException
 	{
-		return main.proxies.Products.load(context, mendixIdentifier);
+		return main.proxies.Product.load(context, mendixIdentifier);
 	}
 
 	/**
 	 * Initialize a proxy using context (recommended). This context will be used for security checking when the get- and set-methods without context parameters are called.
 	 * The get- and set-methods with context parameter should be used when for instance sudo access is necessary (IContext.createSudoClone() can be used to obtain sudo access).
 	 */
-	public static main.proxies.Products initialize(com.mendix.systemwideinterfaces.core.IContext context, com.mendix.systemwideinterfaces.core.IMendixObject mendixObject)
+	public static main.proxies.Product initialize(com.mendix.systemwideinterfaces.core.IContext context, com.mendix.systemwideinterfaces.core.IMendixObject mendixObject)
 	{
-		return new main.proxies.Products(context, mendixObject);
+		return new main.proxies.Product(context, mendixObject);
 	}
 
-	public static main.proxies.Products load(com.mendix.systemwideinterfaces.core.IContext context, com.mendix.systemwideinterfaces.core.IMendixIdentifier mendixIdentifier) throws com.mendix.core.CoreException
+	public static main.proxies.Product load(com.mendix.systemwideinterfaces.core.IContext context, com.mendix.systemwideinterfaces.core.IMendixIdentifier mendixIdentifier) throws com.mendix.core.CoreException
 	{
 		com.mendix.systemwideinterfaces.core.IMendixObject mendixObject = com.mendix.core.Core.retrieveId(context, mendixIdentifier);
-		return main.proxies.Products.initialize(context, mendixObject);
+		return main.proxies.Product.initialize(context, mendixObject);
 	}
 
-	public static java.util.List<main.proxies.Products> load(com.mendix.systemwideinterfaces.core.IContext context, java.lang.String xpathConstraint) throws com.mendix.core.CoreException
+	public static java.util.List<main.proxies.Product> load(com.mendix.systemwideinterfaces.core.IContext context, java.lang.String xpathConstraint) throws com.mendix.core.CoreException
 	{
-		java.util.List<main.proxies.Products> result = new java.util.ArrayList<main.proxies.Products>();
-		for (com.mendix.systemwideinterfaces.core.IMendixObject obj : com.mendix.core.Core.retrieveXPathQuery(context, "//Main.Products" + xpathConstraint))
-			result.add(main.proxies.Products.initialize(context, obj));
+		java.util.List<main.proxies.Product> result = new java.util.ArrayList<main.proxies.Product>();
+		for (com.mendix.systemwideinterfaces.core.IMendixObject obj : com.mendix.core.Core.retrieveXPathQuery(context, "//Main.Product" + xpathConstraint))
+			result.add(main.proxies.Product.initialize(context, obj));
 		return result;
 	}
 
@@ -230,7 +230,7 @@ public class Products
 	 */
 	public final com.mendix.systemwideinterfaces.core.IMendixObject getMendixObject()
 	{
-		return productsMendixObject;
+		return productMendixObject;
 	}
 
 	/**
@@ -249,7 +249,7 @@ public class Products
 
 		if (obj != null && getClass().equals(obj.getClass()))
 		{
-			final main.proxies.Products that = (main.proxies.Products) obj;
+			final main.proxies.Product that = (main.proxies.Product) obj;
 			return getMendixObject().equals(that.getMendixObject());
 		}
 		return false;
@@ -266,7 +266,7 @@ public class Products
 	 */
 	public static java.lang.String getType()
 	{
-		return "Main.Products";
+		return "Main.Product";
 	}
 
 	/**

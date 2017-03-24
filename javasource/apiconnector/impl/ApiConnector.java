@@ -39,13 +39,14 @@ public class ApiConnector {
         httpHandler.setApiStatusCode(ctx, statusCode);
     }
 
-    public void addHttpEndpoint(String urlPattern, String microflowName,
+    public void addHttpEndpoint(String urlPattern, String microflowName, String oqlQuery,
                                 Boolean supportsGET, Boolean supportsPOST, Boolean supportsPUT, Boolean supportsDELETE, Boolean supportsPATCH,
-                                String requestMappingName, IMendixObject requestEntity, String responseMappingName, IMendixObject responseEntity) {
+                                String requestMappingName, String requestEntity, String responseMappingName, String responseEntity) {
         httpHandler.addHttpEndpoint(urlPattern,
                 new ApiEndpoint().
                         withUrl(urlPattern).
                         withMicroflowName(microflowName).
+                        withOqlQuery(oqlQuery).
                         withSupportsGet(supportsGET).
                         withSupportsPost(supportsPOST).
                         withSupportsPut(supportsPUT).

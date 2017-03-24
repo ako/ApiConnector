@@ -17,6 +17,7 @@ public class UserActionsRegistrar
     registrator.registerUserAction(apiconnector.actions.ApiStatusCreated201.class);
     registrator.registerUserAction(apiconnector.actions.RegisterApiEndpoint.class);
     registrator.registerUserAction(apiconnector.actions.RegisterApiEndpointWithMappings.class);
+    registrator.registerUserAction(apiconnector.actions.RegisterApiEndpointXpathWithMappings.class);
     registrator.registerUserAction(appcloudservices.actions.GenerateRandomPassword.class);
     registrator.registerUserAction(appcloudservices.actions.LogOutUser.class);
     registrator.registerUserAction(appcloudservices.actions.StartSignOnServlet.class);
