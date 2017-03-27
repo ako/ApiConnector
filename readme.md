@@ -20,6 +20,12 @@ The following Java actions are implemented to enable this:
 The following action illustrates how to register a new API:
 
  ![Register API][1]
+ 
+#### Register an OQL API
+
+The following action illustrates how to register an OQL endpoint:
+
+ ![Register OQL API][5]
 
 ### Implement API
 
@@ -40,3 +46,4 @@ You can do this by running *runivy.cmd*
  [2]: docs/mf-create-product.png
  [3]: docs/mf-get-product.png
  [4]: docs/toolbox-actions.png
+ [5]: docs/register_oql_endpoint.png
