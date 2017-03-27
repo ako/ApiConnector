@@ -6,9 +6,12 @@ import com.mendix.externalinterface.connector.RequestHandler;
 import com.mendix.logging.ILogNode;
 import com.mendix.m2ee.api.IMxRuntimeRequest;
 import com.mendix.m2ee.api.IMxRuntimeResponse;
+import com.mendix.systemwideinterfaces.connectionbus.data.IDataRow;
+import com.mendix.systemwideinterfaces.connectionbus.data.IDataTable;
 import com.mendix.systemwideinterfaces.core.IContext;
 import com.mendix.systemwideinterfaces.core.IMendixObject;
 import com.mendix.systemwideinterfaces.core.ISession;
+import com.mendix.systemwideinterfaces.core.IUser;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -61,10 +64,39 @@ public class ApiConnectorHandler extends RequestHandler {
                             || (endpoint.getSupportsPatch() && method.equals("PATCH"))
                     )) {
                 logger.info(String.format("request handler path %s matches %s", apiPath, endpoint.getUrlMatcher().toString()));
-
+                IContext ctx = null;
+                ISession session = null;
+                IUser user = null;
+                logger.info(String.format("Auth-type: %s", iMxRuntimeRequest.getHttpServletRequest().getAuthType()));
+                logger.info(String.format("User principal: %s", iMxRuntimeRequest.getHttpServletRequest().getUserPrincipal()));
+                logger.info(String.format("Remote user: %s", iMxRuntimeRequest.getHttpServletRequest().getRemoteUser()));
                 try {
-                    IContext ctx = Core.createSystemContext();
-                    ISession session = ctx.getSession();
+                    if (iMxRuntimeRequest.getHeader("username") != null && iMxRuntimeRequest.getHeader("password") != null) {
+                        String username = iMxRuntimeRequest.getHeader("username");
+                        String password = iMxRuntimeRequest.getHeader("password");
+                        logger.info(String.format("Logging in with username %s", username));
+                        session = Core.login(username, password);
+                        ctx = session.createContext();
+                    } /* else if () {
+                        String username = iMxRuntimeRequest.getHeader("username");
+                        String password = iMxRuntimeRequest.getHeader("password");
+                        logger.info(String.format("Logging in with username %s", username));
+                        session = Core.login(username, password);
+                        ctx = session.createContext();
+
+                    } */ else if (iMxRuntimeRequest.getHeader("token") != null) {
+                        String username = iMxRuntimeRequest.getHeader("username");
+                        String token = iMxRuntimeRequest.getHeader("token");
+                        logger.info(String.format("Logging in with username %s, token: %s", username, token));
+                        ctx = Core.createSystemContext().createSudoClone();
+                        user = Core.getUser(ctx, username);
+                        session = Core.initializeSession(user, null);
+                        //session.getLanguage()
+                    } else {
+                        ctx = Core.createSystemContext();
+                        session = ctx.getSession();
+                    }
+
                     logger.info(String.format("Calling onMessage microflow: %s", endpoint.getMicroflowName()));
 
                     /*
@@ -134,11 +166,31 @@ public class ApiConnectorHandler extends RequestHandler {
                         } else {
                             resultObject = Core.execute(ctx, endpoint.getMicroflowName(), true, pars);
                         }
-                    } else if (endpoint.getOqlQuery() != null) {
+                    } else if (endpoint.getXpathQuery() != null) {
+                        /**
+                         * Xpath endpoint
+                         */
                         Map<String, String> sort = new HashMap<String, String>();
-                        resultObject = Core.retrieveXPathQuery(ctx, endpoint.getOqlQuery(), 1, 0, sort).get(0);
-                        logger.info(String.format("Xpath %s result %s", endpoint.getOqlQuery(), resultObject.toString()));
-                    } else {
+                        resultObject = Core.retrieveXPathQuery(ctx, endpoint.getXpathQuery(), 1, 0, sort).get(0);
+                        logger.info(String.format("Xpath %s result %s", endpoint.getXpathQuery(), resultObject.toString()));
+                    } else if (endpoint.getOqlQuery() != null) {
+                        /**
+                         * Oql endpoint
+                         */
+                        logger.info(String.format("executing OQL query: %s", endpoint.getOqlQuery()));
+                        //Core.oq
+                        IDataTable table = Core.retrieveOQLDataTable(ctx, endpoint.getOqlQuery());
+                        Iterator<IDataRow> rowIter = table.iterator();
+                        while(rowIter.hasNext()){
+                            IDataRow row = rowIter.next();
+                            IMendixObject obj = Core.instantiate(ctx, endpoint.getResponseEntity());
+                            int cols = row.getSchema().getColumnCount();
+                            for(int i=0; i<cols; i++) {
+                                String colName = row.getSchema().getColumnSchema(i).getName();
+                                obj.setValue(ctx,colName,row.getValue(ctx,i));
+                            }
+                            resultObject = obj;
+                        }
 
                     }
                     /*
@@ -174,6 +226,7 @@ public class ApiConnectorHandler extends RequestHandler {
                         }
                     }
                     ctx.endTransaction();
+                    Core.logout(session);
                     break;
                 } catch (Exception e) {
                     logger.warn(String.format("Failed to execute microflow: %s", endpoint.getMicroflowName()));

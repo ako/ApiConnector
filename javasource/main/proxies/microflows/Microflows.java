@@ -54,6 +54,19 @@ public class Microflows
 			throw new MendixRuntimeException(e);
 		}
 	}
+	public static java.lang.String convert_decimal_to_string(IContext context, java.math.BigDecimal _decimalToConvert)
+	{
+		try
+		{
+			Map<java.lang.String, Object> params = new HashMap<java.lang.String, Object>();
+			params.put("decimalToConvert", _decimalToConvert);
+			return (java.lang.String)Core.execute(context, "Main.convert_decimal_to_string", params);
+		}
+		catch (CoreException e)
+		{
+			throw new MendixRuntimeException(e);
+		}
+	}
 	public static java.lang.String createProduct(IContext context, java.lang.String _payload, java.lang.String _mimetype, java.lang.String _url, java.lang.String _operation)
 	{
 		try

@@ -2,7 +2,6 @@ package apiconnector.impl;
 
 import com.mendix.core.Core;
 import com.mendix.systemwideinterfaces.core.IContext;
-import com.mendix.systemwideinterfaces.core.IMendixObject;
 
 /**
  * Created by ako on 22-6-2016.
@@ -39,7 +38,7 @@ public class ApiConnector {
         httpHandler.setApiStatusCode(ctx, statusCode);
     }
 
-    public void addHttpEndpoint(String urlPattern, String microflowName, String oqlQuery,
+    public void addHttpEndpoint(String urlPattern, String microflowName, String xpathQuery, String oqlQuery,
                                 Boolean supportsGET, Boolean supportsPOST, Boolean supportsPUT, Boolean supportsDELETE, Boolean supportsPATCH,
                                 String requestMappingName, String requestEntity, String responseMappingName, String responseEntity) {
         httpHandler.addHttpEndpoint(urlPattern,
@@ -47,6 +46,7 @@ public class ApiConnector {
                         withUrl(urlPattern).
                         withMicroflowName(microflowName).
                         withOqlQuery(oqlQuery).
+                        withXpathQuery(xpathQuery).
                         withSupportsGet(supportsGET).
                         withSupportsPost(supportsPOST).
                         withSupportsPut(supportsPUT).

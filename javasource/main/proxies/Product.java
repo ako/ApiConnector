@@ -22,7 +22,8 @@ public class Product
 	{
 		EAN("EAN"),
 		Name("Name"),
-		Description("Description");
+		Description("Description"),
+		Price("Price");
 
 		private java.lang.String metaName;
 
@@ -223,6 +224,42 @@ public class Product
 	public final void setDescription(com.mendix.systemwideinterfaces.core.IContext context, java.lang.String description)
 	{
 		getMendixObject().setValue(context, MemberNames.Description.toString(), description);
+	}
+
+	/**
+	 * @return value of Price
+	 */
+	public final java.math.BigDecimal getPrice()
+	{
+		return getPrice(getContext());
+	}
+
+	/**
+	 * @param context
+	 * @return value of Price
+	 */
+	public final java.math.BigDecimal getPrice(com.mendix.systemwideinterfaces.core.IContext context)
+	{
+		return (java.math.BigDecimal) getMendixObject().getValue(context, MemberNames.Price.toString());
+	}
+
+	/**
+	 * Set value of Price
+	 * @param price
+	 */
+	public final void setPrice(java.math.BigDecimal price)
+	{
+		setPrice(getContext(), price);
+	}
+
+	/**
+	 * Set value of Price
+	 * @param context
+	 * @param price
+	 */
+	public final void setPrice(com.mendix.systemwideinterfaces.core.IContext context, java.math.BigDecimal price)
+	{
+		getMendixObject().setValue(context, MemberNames.Price.toString(), price);
 	}
 
 	/**

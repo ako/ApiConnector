@@ -1,7 +1,5 @@
 package apiconnector.impl;
 
-import com.mendix.systemwideinterfaces.core.IMendixObject;
-
 import java.util.Arrays;
 import java.util.regex.Pattern;
 
@@ -33,6 +31,16 @@ public class ApiEndpoint {
     }
 
     private String oqlQuery;
+
+    public String getXpathQuery() {
+        return xpathQuery;
+    }
+
+    public void setXpathQuery(String xpathQuery) {
+        this.xpathQuery = xpathQuery;
+    }
+
+    private String xpathQuery;
 
     public Boolean getSupportsPut() {
         return supportsPut;
@@ -78,12 +86,12 @@ public class ApiEndpoint {
                 '}';
     }
 
-    public String getMethodsString(){
-        return (supportsGet?"GET":"") +
-                (supportsPost?"POST":"") +
-                (supportsPut?"PUT":"") +
-                (supportsDelete?"DELETE":"") +
-                (supportsPatch?"PATCH":"");
+    public String getMethodsString() {
+        return (supportsGet ? "GET" : "") +
+                (supportsPost ? "POST" : "") +
+                (supportsPut ? "PUT" : "") +
+                (supportsDelete ? "DELETE" : "") +
+                (supportsPatch ? "PATCH" : "");
     }
 
     public Boolean getSupportsGet() {
@@ -129,8 +137,14 @@ public class ApiEndpoint {
         this.microflowName = microflowName;
         return this;
     }
-    public ApiEndpoint withOqlQuery(String oqlQuery){
+
+    public ApiEndpoint withOqlQuery(String oqlQuery) {
         this.oqlQuery = oqlQuery;
+        return this;
+    }
+
+    public ApiEndpoint withXpathQuery(String xpathQuery) {
+        this.xpathQuery = xpathQuery;
         return this;
     }
 

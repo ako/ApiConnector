@@ -12,12 +12,11 @@ package apiconnector.actions;
 import apiconnector.impl.ApiConnector;
 import com.mendix.systemwideinterfaces.core.IContext;
 import com.mendix.webui.CustomJavaAction;
-import com.mendix.systemwideinterfaces.core.IMendixObject;
 
-public class RegisterApiEndpointWithMappings extends CustomJavaAction<java.lang.Boolean>
+public class RegisterApiEndpointOqlWithMappings extends CustomJavaAction<java.lang.Boolean>
 {
 	private java.lang.String UrlPattern;
-	private java.lang.String MicroflowName;
+	private java.lang.String OqlQuery;
 	private java.lang.Boolean SupportsGET;
 	private java.lang.Boolean SupportsPOST;
 	private java.lang.Boolean SupportsPUT;
@@ -28,11 +27,11 @@ public class RegisterApiEndpointWithMappings extends CustomJavaAction<java.lang.
 	private java.lang.String ResponseMappingName;
 	private java.lang.String ResponseEntity;
 
-	public RegisterApiEndpointWithMappings(IContext context, java.lang.String UrlPattern, java.lang.String MicroflowName, java.lang.Boolean SupportsGET, java.lang.Boolean SupportsPOST, java.lang.Boolean SupportsPUT, java.lang.Boolean SupportsDELETE, java.lang.Boolean SupportsPATCH, java.lang.String RequestMappingName, java.lang.String RequestEntity, java.lang.String ResponseMappingName, java.lang.String ResponseEntity)
+	public RegisterApiEndpointOqlWithMappings(IContext context, java.lang.String UrlPattern, java.lang.String OqlQuery, java.lang.Boolean SupportsGET, java.lang.Boolean SupportsPOST, java.lang.Boolean SupportsPUT, java.lang.Boolean SupportsDELETE, java.lang.Boolean SupportsPATCH, java.lang.String RequestMappingName, java.lang.String RequestEntity, java.lang.String ResponseMappingName, java.lang.String ResponseEntity)
 	{
 		super(context);
 		this.UrlPattern = UrlPattern;
-		this.MicroflowName = MicroflowName;
+		this.OqlQuery = OqlQuery;
 		this.SupportsGET = SupportsGET;
 		this.SupportsPOST = SupportsPOST;
 		this.SupportsPUT = SupportsPUT;
@@ -48,10 +47,10 @@ public class RegisterApiEndpointWithMappings extends CustomJavaAction<java.lang.
 	public java.lang.Boolean executeAction() throws Exception
 	{
 		// BEGIN USER CODE
-        ApiConnector connector = new ApiConnector();
-        connector.addHttpEndpoint(this.UrlPattern, this.MicroflowName, null, null, this.SupportsGET, this.SupportsPOST, this.SupportsPUT, this.SupportsDELETE, this.SupportsPATCH,
-                this.RequestMappingName, this.RequestEntity, this.ResponseMappingName, this.ResponseEntity);
-        return true;
+		ApiConnector connector = new ApiConnector();
+		connector.addHttpEndpoint(this.UrlPattern, null, null, this.OqlQuery, this.SupportsGET, this.SupportsPOST, this.SupportsPUT, this.SupportsDELETE, this.SupportsPATCH,
+				this.RequestMappingName, this.RequestEntity, this.ResponseMappingName, this.ResponseEntity);
+		return true;
 		// END USER CODE
 	}
 
@@ -61,7 +60,7 @@ public class RegisterApiEndpointWithMappings extends CustomJavaAction<java.lang.
 	@Override
 	public java.lang.String toString()
 	{
-		return "RegisterApiEndpointWithMappings";
+		return "RegisterApiEndpointOqlWithMappings";
 	}
 
 	// BEGIN EXTRA CODE

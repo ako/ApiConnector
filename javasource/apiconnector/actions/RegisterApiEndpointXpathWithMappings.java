@@ -48,7 +48,7 @@ public class RegisterApiEndpointXpathWithMappings extends CustomJavaAction<java.
 	{
 		// BEGIN USER CODE
         ApiConnector connector = new ApiConnector();
-        connector.addHttpEndpoint(this.UrlPattern, null, this.XpathQuery, this.SupportsGET, this.SupportsPOST, this.SupportsPUT, this.SupportsDELETE, this.SupportsPATCH,
+        connector.addHttpEndpoint(this.UrlPattern, null,  this.XpathQuery, null, this.SupportsGET, this.SupportsPOST, this.SupportsPUT, this.SupportsDELETE, this.SupportsPATCH,
                 this.RequestMappingName, this.RequestEntity, this.ResponseMappingName, this.ResponseEntity);
         return true;
 		// END USER CODE
