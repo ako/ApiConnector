@@ -22,6 +22,16 @@ public class ApiEndpoint {
     private String responseMappingName;
     private String responseEntity;
 
+    public Boolean getBinaryResponse() {
+        return binaryResponse;
+    }
+
+    public void setBinaryResponse(Boolean binaryResponse) {
+        this.binaryResponse = binaryResponse;
+    }
+
+    private Boolean binaryResponse;
+
     public String getOqlQuery() {
         return oqlQuery;
     }
@@ -253,6 +263,11 @@ public class ApiEndpoint {
 
     public ApiEndpoint withSupportsPatch(Boolean supportsPATCH) {
         this.supportsPatch = supportsPATCH;
+        return this;
+    }
+
+    public ApiEndpoint withBinaryResponse(Boolean binaryResponse) {
+        this.binaryResponse = binaryResponse;
         return this;
     }
 }

@@ -154,15 +154,19 @@ public class ApiConnectorHandler extends RequestHandler {
                     ApiMicroflowState mfState = new ApiMicroflowState();
                     mfState.setHeaderLocation(apiPath);
                     apiState.put(txId, mfState);
+                    mfState.setResponseMimeType("application/json");
 
                     String resultString = null;
                     Object resultObject = null;
+                    Object resultBytes = null;
                     if (endpoint.getMicroflowName() != null) {
                         /*
                          * Invoke microflow
                          */
-                        if (endpoint.getResponseMappingName() == null) {
+                        if (endpoint.getResponseMappingName() == null && !endpoint.getBinaryResponse()) {
                             resultString = (String) Core.execute(ctx, endpoint.getMicroflowName(), true, pars);
+                        } else if (endpoint.getBinaryResponse()) {
+                            resultObject = Core.execute(ctx, endpoint.getMicroflowName(), true, pars);
                         } else {
                             resultObject = Core.execute(ctx, endpoint.getMicroflowName(), true, pars);
                         }
@@ -181,13 +185,13 @@ public class ApiConnectorHandler extends RequestHandler {
                         //Core.oq
                         IDataTable table = Core.retrieveOQLDataTable(ctx, endpoint.getOqlQuery());
                         Iterator<IDataRow> rowIter = table.iterator();
-                        while(rowIter.hasNext()){
+                        while (rowIter.hasNext()) {
                             IDataRow row = rowIter.next();
                             IMendixObject obj = Core.instantiate(ctx, endpoint.getResponseEntity());
                             int cols = row.getSchema().getColumnCount();
-                            for(int i=0; i<cols; i++) {
+                            for (int i = 0; i < cols; i++) {
                                 String colName = row.getSchema().getColumnSchema(i).getName();
-                                obj.setValue(ctx,colName,row.getValue(ctx,i));
+                                obj.setValue(ctx, colName, row.getValue(ctx, i));
                             }
                             resultObject = obj;
                         }
@@ -199,15 +203,27 @@ public class ApiConnectorHandler extends RequestHandler {
                     if (apiState.containsKey(txId)) {
                         iMxRuntimeResponse.setStatus(apiState.get(txId).getStatusCode());
                         iMxRuntimeResponse.addHeader("Location", apiState.get(txId).getHeaderLocation());
-                        apiState.put(txId, null);
+                        if (apiState.get(txId).getResponseMimeType() != null) {
+                            iMxRuntimeResponse.setContentType(apiState.get(txId).getResponseMimeType());
+                        }
+                        if (apiState.get(txId).getResponseCacheControl() != null) {
+                            iMxRuntimeResponse.addHeader("cache-control", apiState.get(txId).getResponseCacheControl());
+                        }
                     } else {
                         logger.info(String.format("Api state not found for %s, %s", endpoint.getMicroflowName(), txId));
                     }
-                    iMxRuntimeResponse.setContentType("application/json");
                     /**
                      * Return request response
                      */
                     if (endpoint.getResponseMappingName() == null) {
+                        if (resultObject != null && endpoint.getBinaryResponse()) {
+                            //iMxRuntimeResponse.setContentType("image/jpeg");
+                            InputStream is = Core.getImage(ctx, (IMendixObject) resultObject, false);
+                            OutputStream os = iMxRuntimeResponse.getOutputStream();
+                            ByteStreams.copy(is, os);
+                            is.close();
+                            os.close();
+                        }
                         if (resultString != null) {
                             iMxRuntimeResponse.getWriter().write(resultString);
                         }
@@ -225,8 +241,15 @@ public class ApiConnectorHandler extends RequestHandler {
                             iMxRuntimeResponse.getWriter().write("{'error':'Exporting complex json not yet supported'}");
                         }
                     }
+//                    apiState.put(txId, null);
+                    apiState.remove(txId);
                     ctx.endTransaction();
-                    Core.logout(session);
+                    try {
+                        Core.logout(session);
+                    } catch (Exception e1) {
+                        // you cannot logout if not logged in, ignore
+                        logger.warn(e1.getMessage());
+                    }
                     break;
                 } catch (Exception e) {
                     logger.warn(String.format("Failed to execute microflow: %s", endpoint.getMicroflowName()));
@@ -239,6 +262,12 @@ public class ApiConnectorHandler extends RequestHandler {
         logger.info("< processRequest");
     }
 
+    /**
+     * Add endpoint to Http Request Handler
+     *
+     * @param url
+     * @param endpoint
+     */
     public void addHttpEndpoint(String url, ApiEndpoint endpoint) {
         logger.info(String.format("addHttpEndpoint: %s, %s", url, endpoint));
 
@@ -250,7 +279,11 @@ public class ApiConnectorHandler extends RequestHandler {
          */
         ArrayList<String> parNames = new ArrayList<String>();
         Matcher parMatcher = urlParsToRe.matcher(url);
-        if (parMatcher.find()) {
+
+        logger.info(String.format("url matcher re: %s", urlRe));
+        logger.info(String.format("url parameter group matcher re: %s", urlParGroupsRe));
+        logger.info(String.format("parMatcher: %s", parMatcher));
+        while (parMatcher.find()) {
             logger.info(String.format("found parameters: %d", parMatcher.groupCount()));
             for (int i = 0; i < parMatcher.groupCount(); i++) {
                 String parName = parMatcher.group(i).replace("{", "").replace("}", "");
@@ -260,8 +293,6 @@ public class ApiConnectorHandler extends RequestHandler {
         }
 
         logger.info(String.format("parameter names: %s", parNames.toString()));
-        logger.info(String.format("url matcher re: %s", urlRe));
-        logger.info(String.format("url parameter group matcher re: %s", urlParGroupsRe));
 
         endpoint.setUrlParameterGroupMatcher(Pattern.compile(urlParGroupsRe));
         endpoint.setUrlMatcher(Pattern.compile(urlRe));
@@ -296,5 +327,15 @@ public class ApiConnectorHandler extends RequestHandler {
     public void setApiStatusCode(IContext ctx, int statusCode) {
         ApiMicroflowState mfState = getApiStateForThread(ctx);
         mfState.setStatusCode(statusCode);
+    }
+
+    public void setApiResponseCacheControl(IContext context, String cacheControl) {
+        ApiMicroflowState mfState = getApiStateForThread(context);
+        mfState.setResponseCacheControl(cacheControl);
+    }
+
+    public void setApiResponseContentType(IContext context, String mimeType) {
+        ApiMicroflowState mfState = getApiStateForThread(context);
+        mfState.setResponseMimeType(mimeType);
     }
 }

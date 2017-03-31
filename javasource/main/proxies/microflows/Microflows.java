@@ -132,6 +132,25 @@ public class Microflows
 			throw new MendixRuntimeException(e);
 		}
 	}
+	public static main.proxies.ProductImage getProductImage(IContext context, java.lang.String _payload, java.lang.String _mimetype, java.lang.String _url, java.lang.String _operation, java.lang.String _eAN, java.lang.Long _imageId)
+	{
+		try
+		{
+			Map<java.lang.String, Object> params = new HashMap<java.lang.String, Object>();
+			params.put("Payload", _payload);
+			params.put("Mimetype", _mimetype);
+			params.put("Url", _url);
+			params.put("Operation", _operation);
+			params.put("EAN", _eAN);
+			params.put("ImageId", _imageId);
+			IMendixObject result = (IMendixObject)Core.execute(context, "Main.GetProductImage", params);
+			return result == null ? null : main.proxies.ProductImage.initialize(context, result);
+		}
+		catch (CoreException e)
+		{
+			throw new MendixRuntimeException(e);
+		}
+	}
 	public static java.lang.String getProductInfo(IContext context, java.lang.String _payload, java.lang.String _mimetype, java.lang.String _url, java.lang.String _operation, java.lang.String _eAN)
 	{
 		try

@@ -17,25 +17,38 @@ The following Java actions are implemented to enable this:
 
 ### Register a new API
 
+#### A microflow API
+
 The following action illustrates how to register a new API:
 
  ![Register API][1]
+
+ The following microflow implements the *get product by EAN* API:
  
+  ![Get product by EAN][3]
+ 
+ Another example, a microflow to implement *create new product* API:
+ 
+  ![Create product][2]
+
 #### Register an OQL API
 
 The following action illustrates how to register an OQL endpoint:
 
  ![Register OQL API][5]
 
-### Implement API
+#### Register a binary API implemented using a Microflow
 
-The following microflow implements the *get product by EAN* API:
+The following registered an endpoint to return images:
 
- ![Get product by EAN][3]
+ ![Register Binary Microflow API][6]
+ 
+The implementation returns a subclass of a FileDocument entity:
 
-Another example, a microflow to implement *create new product* API:
+ ![Microflow API implementation for a binary endpoint][7]
+ 
+The microflow also illustrates how you can set the content type of the response and how you can control caching.
 
- ![Create product][2]
 
 ## Build
 
@@ -47,3 +60,5 @@ You can do this by running *runivy.cmd*
  [3]: docs/mf-get-product.png
  [4]: docs/toolbox-actions.png
  [5]: docs/register_oql_endpoint.png
+ [6]: docs/register_binary_endpoint.png
+ [7]: docs/microflow_binary_endpoint.png

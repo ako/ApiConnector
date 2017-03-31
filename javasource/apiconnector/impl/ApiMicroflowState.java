@@ -6,6 +6,13 @@ package apiconnector.impl;
 public class ApiMicroflowState {
     private String headerLocation;
 
+    public String getResponseCacheControl() {
+        return responseCacheControl;
+    }
+
+    private String responseCacheControl;
+    private String responseMimeType;
+
     public int getStatusCode() {
         return statusCode;
     }
@@ -26,5 +33,17 @@ public class ApiMicroflowState {
 
     public String getHeaderLocation() {
         return headerLocation;
+    }
+
+    public void setResponseCacheControl(String responseCacheControl) {
+        this.responseCacheControl = responseCacheControl;
+    }
+
+    public void setResponseMimeType(String responseMimeType) {
+        this.responseMimeType = responseMimeType;
+    }
+
+    public String getResponseMimeType() {
+        return responseMimeType;
     }
 }

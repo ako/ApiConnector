@@ -9,6 +9,7 @@
 
 package apiconnector.actions;
 
+import apiconnector.impl.ApiEndpoint;
 import com.mendix.systemwideinterfaces.core.IContext;
 import com.mendix.webui.CustomJavaAction;
 import apiconnector.impl.ApiConnector;
@@ -19,14 +20,16 @@ public class RegisterApiEndpoint extends CustomJavaAction<java.lang.Boolean>
 	private java.lang.String MicroflowName;
 	private java.lang.Boolean SupportsGET;
 	private java.lang.Boolean SupportsPOST;
+	private java.lang.Boolean BinaryResponse;
 
-	public RegisterApiEndpoint(IContext context, java.lang.String UrlPattern, java.lang.String MicroflowName, java.lang.Boolean SupportsGET, java.lang.Boolean SupportsPOST)
+	public RegisterApiEndpoint(IContext context, java.lang.String UrlPattern, java.lang.String MicroflowName, java.lang.Boolean SupportsGET, java.lang.Boolean SupportsPOST, java.lang.Boolean BinaryResponse)
 	{
 		super(context);
 		this.UrlPattern = UrlPattern;
 		this.MicroflowName = MicroflowName;
 		this.SupportsGET = SupportsGET;
 		this.SupportsPOST = SupportsPOST;
+		this.BinaryResponse = BinaryResponse;
 	}
 
 	@Override
@@ -34,7 +37,14 @@ public class RegisterApiEndpoint extends CustomJavaAction<java.lang.Boolean>
 	{
 		// BEGIN USER CODE
         ApiConnector connector = new ApiConnector();
-        connector.addHttpEndpoint(this.UrlPattern,this.MicroflowName,this.SupportsGET,this.SupportsPOST);
+        //connector.addHttpEndpoint(this.UrlPattern,this.MicroflowName,this.SupportsGET,this.SupportsPOST,this.BinaryResponse);
+		connector.addHttpEndpoint(new ApiEndpoint()
+				.withUrl(this.UrlPattern)
+				.withMicroflowName(this.MicroflowName)
+				.withSupportsGet(this.SupportsGET)
+				.withSupportsPost(this.SupportsPOST)
+				.withBinaryResponse(this.BinaryResponse)
+		);
         return true;
 		// END USER CODE
 	}

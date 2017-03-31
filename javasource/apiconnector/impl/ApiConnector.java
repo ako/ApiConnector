@@ -57,4 +57,16 @@ public class ApiConnector {
                         withResponseMapping(responseMappingName).
                         withResponseEntity(responseEntity));
     }
+
+    public  void addHttpEndpoint(ApiEndpoint apiEndpoint){
+        httpHandler.addHttpEndpoint(apiEndpoint.getUrl(),apiEndpoint);
+    }
+
+    public void setApiResponseCacheControl(IContext context, String cacheControl) {
+        httpHandler.setApiResponseCacheControl(context, cacheControl);
+    }
+
+    public void setApiResponseContentType(IContext context, String mimeType) {
+        httpHandler.setApiResponseContentType(context, mimeType);
+    }
 }
