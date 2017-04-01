@@ -49,7 +49,16 @@ The implementation returns a subclass of a FileDocument entity:
  
 The microflow also illustrates how you can set the content type of the response and how you can control caching.
 
+#### Register a pdf report API
 
+The following registers an API endpoint returning a pdf report:
+
+  ![Register PDF Endpoint][8]
+  
+Implementation of the endpoint generating a pdf report:
+  
+  ![Generate PDF report Microflow][9]
+  
 ## Build
 
 To run this project from the Mendix modeler you need to download the required java dependensies.
@@ -62,3 +71,5 @@ You can do this by running *runivy.cmd*
  [5]: docs/register_oql_endpoint.png
  [6]: docs/register_binary_endpoint.png
  [7]: docs/microflow_binary_endpoint.png
+ [8]: docs/register_pdf_endpoint.png
+ [9]: docs/generate_pdf_report_mf.png
